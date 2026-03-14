@@ -50,7 +50,7 @@ main! = |_args|
         msgs,
         empty_topic_map,
         |topic_map, msg|
-            (new_topic_map, topic_id) = get_topic_id(topic_map, msg.channel_id, msg.subject)
+            (new_topic_map, topic_id) = topic_map |> get_topic_id(msg.channel_id, msg.subject)
             new_msg = { channel_id: msg.channel_id, topic_id, content: msg.content }
             dbg { msg, topic_id, new_msg }
             new_topic_map,

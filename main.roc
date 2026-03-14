@@ -18,7 +18,7 @@ TopicMap : {
     id_map : Dict TopicId Topic,
 }
 
-empty_topic_map: TopicMap
+empty_topic_map : TopicMap
 empty_topic_map = { seq: 0, key_map: Dict.empty({}), id_map: Dict.empty({}) }
 
 get_topic : TopicMap, TopicId -> Result Topic [KeyNotFound]

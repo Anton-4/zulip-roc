@@ -27,8 +27,10 @@ get_topic_id = |topic_map, channel_id, topic_name|
 
         _ ->
             topic_id = topic_map.seq + 1
-            new_dct = Dict.insert(key_to_channel, key, topic_id)
-            new_topic_map = { seq: topic_id, key_to_channel: new_dct }
+            new_topic_map = {
+                seq: topic_id,
+                key_to_channel: key_to_channel |> Dict.insert(key, topic_id),
+            }
             (new_topic_map, topic_id)
 
 main! : List Arg => Result {} _

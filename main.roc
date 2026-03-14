@@ -4,26 +4,27 @@ import cli.Stdout
 import cli.Arg exposing [Arg]
 
 Message : {
-    channel_id: U64,
-    subject: Str,
-    content: Str,
+    channel_id : U64,
+    subject : Str,
+    content : Str,
 }
 
-ChannelId: U32
-TopicId: U32
+ChannelId : U32
+TopicId : U32
 
 TopicMap : {
-    seq: U32,
-    key_to_channel: Dict Str U32,
+    seq : U32,
+    key_to_channel : Dict Str U32,
 }
 
-get_topic_id: TopicMap, ChannelId, Str -> (TopicMap, TopicId)
+get_topic_id : TopicMap, ChannelId, Str -> (TopicMap, TopicId)
 get_topic_id = |topic_map, channel_id, topic_name|
     key_to_channel = topic_map.key_to_channel
     key = "${Num.to_str(channel_id)}-${topic_name}"
     when Dict.get(key_to_channel, key) is
         Ok(topic_id) ->
             (topic_map, topic_id)
+
         _ ->
             topic_id = topic_map.seq + 1
             new_dct = Dict.insert(key_to_channel, key, topic_id)
@@ -45,11 +46,14 @@ main! = |_args|
 
     empty_topic_map = { seq: 0, key_to_channel: Dict.empty({}) }
 
-    result = List.walk(msgs, empty_topic_map, |topic_map, msg|
-        (new_topic_map, topic_id) = get_topic_id(topic_map, msg.channel_id, msg.subject)
-        new_msg = { channel_id: msg.channel_id, topic_id, content: msg.content }
-        dbg {msg, topic_id, new_msg}
-        new_topic_map
+    result = List.walk(
+        msgs,
+        empty_topic_map,
+        |topic_map, msg|
+            (new_topic_map, topic_id) = get_topic_id(topic_map, msg.channel_id, msg.subject)
+            new_msg = { channel_id: msg.channel_id, topic_id, content: msg.content }
+            dbg { msg, topic_id, new_msg }
+            new_topic_map,
     )
 
     dbg result

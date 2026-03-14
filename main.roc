@@ -6,19 +6,22 @@ import cli.Arg exposing [Arg]
 ChannelId : U32
 TopicId : U32
 
-Topic: {
-    topic_id: TopicId,
-    channel_id: ChannelId,
-    topic_name: Str,
+Topic : {
+    topic_id : TopicId,
+    channel_id : ChannelId,
+    topic_name : Str,
 }
 
 TopicMap : {
     seq : U32,
     key_map : Dict Str TopicId,
-    id_map: Dict TopicId Topic,
+    id_map : Dict TopicId Topic,
 }
 
-get_topic: TopicMap, TopicId -> Result Topic [KeyNotFound]
+empty_topic_map: TopicMap
+empty_topic_map = { seq: 0, key_map: Dict.empty({}), id_map: Dict.empty({}) }
+
+get_topic : TopicMap, TopicId -> Result Topic [KeyNotFound]
 get_topic = |topic_map, topic_id|
     topic_map.id_map |> Dict.get(topic_id)
 
@@ -32,7 +35,7 @@ get_topic_id = |topic_map, channel_id, topic_name|
 
         _ ->
             topic_id = topic_map.seq + 1
-            topic = {topic_id, channel_id, topic_name}
+            topic = { topic_id, channel_id, topic_name }
             new_topic_map = {
                 seq: topic_id,
                 key_map: key_map |> Dict.insert(key, topic_id),
@@ -52,8 +55,6 @@ main! = |_args|
         { channel_id: 103, subject: "mary", content: "msg5" },
         { channel_id: 102, subject: "mary", content: "msg6" },
     ]
-
-    empty_topic_map = { seq: 0, key_map: Dict.empty({}), id_map: Dict.empty({}) }
 
     result = List.walk(
         msgs,

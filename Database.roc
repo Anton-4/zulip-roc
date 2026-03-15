@@ -4,7 +4,7 @@ import DbTypes exposing [ID, Channel, Message, Topic]
 
 Database : {
     channel_map : Dict ID Channel,
-    message_map: Dict ID Message,
+    message_map : Dict ID Message,
     topic_map : Dict ID Topic,
 }
 

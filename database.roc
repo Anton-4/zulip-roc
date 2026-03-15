@@ -12,12 +12,11 @@ test_insert_channel =
 
 test_insert_message =
     message = {
-        channel_id : 99,
-        content : "some content",
+        channel_id: 99,
+        content: "some content",
         message_id: 1001,
-        sender_id : 99,
-        topic_id : 99,
-
+        sender_id: 99,
+        topic_id: 99,
     }
     Database.new |> Database.insert_message(message)
 

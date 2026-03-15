@@ -1,6 +1,6 @@
 module [ID, Channel, Message, Topic]
 
-ID: U32
+ID : U32
 
 Channel : {
     channel_id : ID,
@@ -8,11 +8,11 @@ Channel : {
 }
 
 Message : {
-    message_id: ID,
-    sender_id: ID,
-    channel_id: ID,
-    topic_id: ID,
-    content: Str,
+    message_id : ID,
+    sender_id : ID,
+    channel_id : ID,
+    topic_id : ID,
+    content : Str,
 }
 
 Topic : {

@@ -2,7 +2,7 @@ app [main!] { cli: platform "https://github.com/roc-lang/basic-cli/releases/down
 
 import cli.Stdout
 import cli.Arg exposing [Arg]
-import TopicMap
+import TopicHelper
 
 main! : List Arg => Result {} _
 main! = |_args|
@@ -19,14 +19,14 @@ main! = |_args|
 
     result = List.walk(
         msgs,
-        TopicMap.empty_topic_map,
-        |topic_map, msg|
-            (new_topic_map, topic_id) = topic_map |> TopicMap.get_topic_id(msg.channel_id, msg.subject)
+        TopicHelper.empty_topic_helper,
+        |topic_helper, msg|
+            (new_topic_helper, topic_id) = topic_helper |> TopicHelper.get_topic_id(msg.channel_id, msg.subject)
             new_msg = { channel_id: msg.channel_id, topic_id, content: msg.content }
             dbg { msg, topic_id, new_msg }
-            new_topic_map,
+            new_topic_helper,
     )
 
-    dbg ("topic for id 1", result |> TopicMap.get_topic(1))
+    dbg ("topic for id 1", result |> TopicHelper.get_topic(1))
 
     Stdout.line!("")

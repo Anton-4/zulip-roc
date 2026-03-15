@@ -1,4 +1,9 @@
-module [Topic]
+module [Channel, Topic]
+
+Channel : {
+    channel_id: U32,
+    name: Str,
+}
 
 Topic : {
     topic_id : U32,

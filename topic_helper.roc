@@ -6,8 +6,6 @@ import TopicHelper
 
 main! : List Arg => Result {} _
 main! = |_args|
-    _ = Stdout.line!("\n\n--------------\n\n")
-
     msgs = [
         { channel_id: 101, subject: "fred", content: "msg1" },
         { channel_id: 101, subject: "fred", content: "msg2" },
@@ -17,7 +15,7 @@ main! = |_args|
         { channel_id: 102, subject: "mary", content: "msg6" },
     ]
 
-    result = List.walk(
+    dbg List.walk(
         msgs,
         TopicHelper.new,
         |topic_helper, msg|

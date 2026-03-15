@@ -1,13 +1,6 @@
 module [TopicHelper, new, get_or_make_topic_for]
 
-ChannelId : U32
-TopicId : U32
-
-Topic : {
-    topic_id : TopicId,
-    channel_id : ChannelId,
-    topic_name : Str,
-}
+import DbTypes exposing [Topic]
 
 TopicHelper : {
     seq : U32,
@@ -17,7 +10,7 @@ TopicHelper : {
 new : TopicHelper
 new = { seq: 0, key_map: Dict.empty({}) }
 
-get_or_make_topic_for : TopicHelper, ChannelId, Str -> (TopicHelper, Topic)
+get_or_make_topic_for : TopicHelper, U32, Str -> (TopicHelper, Topic)
 get_or_make_topic_for = |topic_helper, channel_id, topic_name|
     key = "${Num.to_str(channel_id)}-${topic_name}"
     when Dict.get(topic_helper.key_map, key) is

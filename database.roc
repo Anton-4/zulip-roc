@@ -6,11 +6,20 @@ import cli.Arg exposing [Arg]
 import Database
 import ZulipGlue
 
-test_insert =
+test_insert_channel =
     channel = { channel_id: 101, name: "Engineering" }
-    db = Database.new
+    Database.new |> Database.insert_channel(channel)
 
-    db |> Database.insert_channel(channel)
+test_insert_message =
+    message = {
+        channel_id : 99,
+        content : "some content",
+        message_id: 1001,
+        sender_id : 99,
+        topic_id : 99,
+
+    }
+    Database.new |> Database.insert_message(message)
 
 test_process =
     db = Database.new
@@ -19,7 +28,8 @@ test_process =
 
 main! : List Arg => Result {} _
 main! = |_args|
-    dbg test_insert
+    dbg test_insert_channel
+    dbg test_insert_message
     dbg test_process
 
     Stdout.line!("")

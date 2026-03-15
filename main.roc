@@ -19,14 +19,11 @@ main! = |_args|
 
     result = List.walk(
         msgs,
-        TopicHelper.empty_topic_helper,
+        TopicHelper.new,
         |topic_helper, msg|
-            (new_topic_helper, topic_id) = topic_helper |> TopicHelper.get_topic_id(msg.channel_id, msg.subject)
-            new_msg = { channel_id: msg.channel_id, topic_id, content: msg.content }
-            dbg { msg, topic_id, new_msg }
+            (new_topic_helper, topic) = topic_helper |> TopicHelper.get_or_make_topic_for(msg.channel_id, msg.subject)
+            dbg { msg, topic }
             new_topic_helper,
     )
-
-    dbg ("topic for id 1", result |> TopicHelper.get_topic(1))
 
     Stdout.line!("")

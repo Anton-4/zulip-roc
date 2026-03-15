@@ -4,16 +4,18 @@ import cli.Stdout
 import cli.Arg exposing [Arg]
 
 import Database
-# import ZulipGlue
+import ZulipGlue
 
 main! : List Arg => Result {} _
 main! = |_args|
     channel = { channel_id: 101, name: "Engineering" }
     db = Database.new
-    dbg db
+
     new_db = db |> Database.insert_channel(channel)
     dbg new_db
 
-    # new_db = ZulipGlue.process_server_subscription(database, subscription)
+    subscription = { stream_id: 201, name: "Design" }
+    glue_db = ZulipGlue.process_server_subscription(db, subscription)
+    dbg glue_db
 
     Stdout.line!("")

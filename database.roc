@@ -5,6 +5,7 @@ import cli.Arg exposing [Arg]
 
 import Database
 import ZulipGlue
+import TopicHelper
 
 test_insert_channel =
     channel = { channel_id: 101, name: "Engineering" }
@@ -31,10 +32,10 @@ test_process_server_message =
         sender_full_name: "Foo Barson",
         sender_id: 1,
         subject: "some topic",
-        stream_id: 1,
+        stream_id: 101,
         type: "stream",
     }
-    Database.new |> ZulipGlue.process_server_message(message)
+    Database.new |> ZulipGlue.process_server_message(message, TopicHelper.new)
 
 main! : List Arg => Result {} _
 main! = |_args|

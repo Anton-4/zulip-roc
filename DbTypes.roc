@@ -1,8 +1,8 @@
 module [Channel, Topic]
 
 Channel : {
-    channel_id: U32,
-    name: Str,
+    channel_id : U32,
+    name : Str,
 }
 
 Topic : {

@@ -6,16 +6,20 @@ import cli.Arg exposing [Arg]
 import Database
 import ZulipGlue
 
-main! : List Arg => Result {} _
-main! = |_args|
+test_insert =
     channel = { channel_id: 101, name: "Engineering" }
     db = Database.new
 
-    new_db = db |> Database.insert_channel(channel)
-    dbg new_db
+    db |> Database.insert_channel(channel)
 
+test_process =
+    db = Database.new
     subscription = { stream_id: 201, name: "Design" }
-    glue_db = ZulipGlue.process_server_subscription(db, subscription)
-    dbg glue_db
+    ZulipGlue.process_server_subscription(db, subscription)
+
+main! : List Arg => Result {} _
+main! = |_args|
+    dbg test_insert
+    dbg test_process
 
     Stdout.line!("")

@@ -15,13 +15,14 @@ main! = |_args|
         { channel_id: 102, subject: "mary", content: "msg6" },
     ]
 
-    dbg List.walk(
-        msgs,
-        TopicHelper.new,
-        |topic_helper, msg|
-            (new_topic_helper, topic) = topic_helper |> TopicHelper.get_or_make_topic_for(msg.channel_id, msg.subject)
-            dbg { msg, topic }
-            new_topic_helper,
-    )
+    dbg
+        List.walk(
+            msgs,
+            TopicHelper.new,
+            |topic_helper, msg|
+                (new_topic_helper, topic) = topic_helper |> TopicHelper.get_or_make_topic_for(msg.channel_id, msg.subject)
+                dbg { msg, topic }
+                new_topic_helper,
+        )
 
     Stdout.line!("")

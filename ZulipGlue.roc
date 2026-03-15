@@ -11,7 +11,7 @@ process_server_subscription = |db, subscription|
     }
     db |> Database.insert_channel(channel)
 
-process_server_message: Database.Database, ServerMessage -> Database.Database
+process_server_message : Database.Database, ServerMessage -> Database.Database
 process_server_message = |db, server_message|
     message_id = server_message.id
     channel_id = server_message.stream_id

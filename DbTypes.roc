@@ -1,4 +1,4 @@
-module [ID, Channel, Message, Topic]
+module [ID, Channel, Message, Topic, User]
 
 ID : U32
 
@@ -19,4 +19,9 @@ Topic : {
     topic_id : ID,
     channel_id : ID,
     topic_name : Str,
+}
+
+User: {
+    user_id: ID,
+    full_name: Str,
 }

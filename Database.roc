@@ -1,11 +1,12 @@
 module [Database, new, insert_channel, insert_message, set_topic]
 
-import DbTypes exposing [ID, Channel, Message, Topic]
+import DbTypes exposing [ID, Channel, Message, Topic, User]
 
 Database : {
     channel_map : Dict ID Channel,
     message_map : Dict ID Message,
     topic_map : Dict ID Topic,
+    user_map : Dict ID User,
 }
 
 new : Database
@@ -13,6 +14,7 @@ new = {
     channel_map: Dict.empty({}),
     message_map: Dict.empty({}),
     topic_map: Dict.empty({}),
+    user_map: Dict.empty({}),
 }
 
 insert_channel : Database, Channel -> Database

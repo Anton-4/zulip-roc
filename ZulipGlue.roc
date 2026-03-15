@@ -1,4 +1,4 @@
-module [process_server_subscription]
+module [process_server_message, process_server_subscription]
 
 import Database
 import ServerTypes exposing [ServerMessage, ServerSubscription]

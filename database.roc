@@ -21,14 +21,26 @@ test_insert_message =
     Database.new |> Database.insert_message(message)
 
 test_process_server_subscription =
-    db = Database.new
     subscription = { stream_id: 201, name: "Design" }
-    ZulipGlue.process_server_subscription(db, subscription)
+    Database.new |> ZulipGlue.process_server_subscription(subscription)
+
+test_process_server_message =
+    message = {
+        content: "some content",
+        id: 1001,
+        sender_full_name: "Foo Barson",
+        sender_id: 1,
+        subject: "some topic",
+        stream_id: 1,
+        type: "stream",
+    }
+    Database.new |> ZulipGlue.process_server_message(message)
 
 main! : List Arg => Result {} _
 main! = |_args|
     dbg test_insert_channel
     dbg test_insert_message
     dbg test_process_server_subscription
+    dbg test_process_server_message
 
     Stdout.line!("")

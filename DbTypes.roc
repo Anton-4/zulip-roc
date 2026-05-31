@@ -1,27 +1,30 @@
-module [ID, Channel, Message, Topic, User]
+DbTypes :: [].{
+	# Note: the old code used `ID : U32` as a type alias for these id fields.
+	# The new compiler currently mishandles an alias-of-a-builtin used both as a
+	# Dict key and inside a Dict-value record (layout panic / anonymous recursion),
+	# so we inline `U32` here. The meaning is identical to the old `ID`.
 
-ID : U32
+	Channel : {
+		channel_id : U32,
+		name : Str,
+	}
 
-Channel : {
-    channel_id : ID,
-    name : Str,
-}
+	Message : {
+		message_id : U32,
+		sender_id : U32,
+		channel_id : U32,
+		topic_id : U32,
+		content : Str,
+	}
 
-Message : {
-    message_id : ID,
-    sender_id : ID,
-    channel_id : ID,
-    topic_id : ID,
-    content : Str,
-}
+	Topic : {
+		topic_id : U32,
+		channel_id : U32,
+		topic_name : Str,
+	}
 
-Topic : {
-    topic_id : ID,
-    channel_id : ID,
-    topic_name : Str,
-}
-
-User: {
-    user_id: ID,
-    full_name: Str,
+	User : {
+		user_id : U32,
+		full_name : Str,
+	}
 }

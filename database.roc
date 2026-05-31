@@ -1,47 +1,28 @@
-app [main!] { cli: platform "https://github.com/roc-lang/basic-cli/releases/download/0.20.0/X73hGh05nNTkDHU06FHC0YfFaQB1pimX7gncRcao5mU.tar.br" }
+import DbTypes
 
-import cli.Stdout
-import cli.Arg exposing [Arg]
+Database := {
+	channel_map : Dict(U32, DbTypes.Channel),
+	message_map : Dict(U32, DbTypes.Message),
+	topic_map : Dict(U32, DbTypes.Topic),
+	user_map : Dict(U32, DbTypes.User),
+}.{
+	new : () -> Database
+	new = || {
+		channel_map: Dict.empty(),
+		message_map: Dict.empty(),
+		topic_map: Dict.empty(),
+		user_map: Dict.empty(),
+	}
 
-import Database
-import ZulipGlue
-import TopicHelper
+	insert_channel : Database, DbTypes.Channel -> Database
+	insert_channel = |database, channel|
+		{ ..database, channel_map: database.channel_map.insert(channel.channel_id, channel) }
 
-test_insert_channel =
-    channel = { channel_id: 101, name: "Engineering" }
-    Database.new |> Database.insert_channel(channel)
+	insert_message : Database, DbTypes.Message -> Database
+	insert_message = |database, message|
+		{ ..database, message_map: database.message_map.insert(message.message_id, message) }
 
-test_insert_message =
-    message = {
-        channel_id: 99,
-        content: "some content",
-        message_id: 1001,
-        sender_id: 99,
-        topic_id: 99,
-    }
-    Database.new |> Database.insert_message(message)
-
-test_process_server_subscription =
-    subscription = { stream_id: 201, name: "Design" }
-    Database.new |> ZulipGlue.process_server_subscription(subscription)
-
-test_process_server_message =
-    message = {
-        content: "some content",
-        id: 1001,
-        sender_full_name: "Foo Barson",
-        sender_id: 1,
-        subject: "some topic",
-        stream_id: 101,
-        type: "stream",
-    }
-    Database.new |> ZulipGlue.process_server_message(message, TopicHelper.new)
-
-main! : List Arg => Result {} _
-main! = |_args|
-    dbg test_insert_channel
-    dbg test_insert_message
-    dbg test_process_server_subscription
-    dbg test_process_server_message
-
-    Stdout.line!("")
+	set_topic : Database, DbTypes.Topic -> Database
+	set_topic = |database, topic|
+		{ ..database, topic_map: database.topic_map.insert(topic.topic_id, topic) }
+}

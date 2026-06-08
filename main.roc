@@ -2,7 +2,7 @@ app [main!] { pf: platform "https://github.com/lukewilliamboswell/roc-platform-t
 
 import pf.Stdout
 
-import Database
+import MyDatabase
 import TopicHelper
 import ZulipGlue
 
@@ -18,7 +18,7 @@ main! = |_args| {
 
 	test_insert_channel = {
 		channel = { channel_id: 101, name: "Engineering" }
-		Database.new().insert_channel(channel)
+		MyDatabase.new().insert_channel(channel)
 	}
 
 	test_insert_message = {
@@ -29,12 +29,12 @@ main! = |_args| {
 			sender_id: 99,
 			topic_id: 99,
 		}
-		Database.new().insert_message(message)
+		MyDatabase.new().insert_message(message)
 	}
 
 	test_process_server_subscription = {
 		subscription = { stream_id: 201, name: "Design" }
-		ZulipGlue.process_server_subscription(Database.new(), subscription)
+		ZulipGlue.process_server_subscription(MyDatabase.new(), subscription)
 	}
 
 	test_process_server_message = {
@@ -47,7 +47,7 @@ main! = |_args| {
 			stream_id: 101,
 			type: "stream",
 		}
-		ZulipGlue.process_server_message(Database.new(), message, TopicHelper.new())
+		ZulipGlue.process_server_message(MyDatabase.new(), message, TopicHelper.new())
 	}
 
 	print!(test_insert_channel)
